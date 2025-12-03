@@ -53,17 +53,17 @@ int maxPower1(const char *bank) {
     return num + (max - '0');
 }
 
-int maxPower2(const char *bank) {
+long long int maxPower2(const char *bank) {
     int len = strlen(bank);
 
-    int num = 0;
+    long long int num = 0;
     int lastDigitIdx = 0;
     for (int offset = 11; offset >= 0; offset--) {
         char max = '0';
         for (int i = lastDigitIdx; i < len - offset; i++) {
             if (bank[i] > max) {
                 max = bank[i];
-                lastDigitIdx = i;
+                lastDigitIdx = i + 1;
             }
         }
         num *= 10;
@@ -76,17 +76,17 @@ int maxPower2(const char *bank) {
 int main(void) {
     char **banks = readBanks("input03.txt");
 
-    int tot = 0;
+    long long int tot = 0;
     for (int i = 0; i < arrlen(banks); i++) {
-        tot += maxPower(banks[i]);
+        tot += maxPower1(banks[i]);
     }
-    printf("Total 1: %d\n", tot);
+    printf("Total 1: %lld\n", tot);
 
-    int tot = 0;
+    tot = 0;
     for (int i = 0; i < arrlen(banks); i++) {
-        tot += maxPower(banks[i]);
+        tot += maxPower2(banks[i]);
     }
-    printf("Total 1: %d\n", tot);
+    printf("Total 2: %lld\n", tot);
 
     free(banks[0]);
     arrfree(banks);
